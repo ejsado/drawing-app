@@ -5,7 +5,7 @@
 			I Can't Draw That
 		</title>
 		
-		<link href="styles/main.css" rel="stylesheet" type="text/css">
+		<link href="draw/static/styles/main.css" rel="stylesheet" type="text/css">
 		
 	</head>
 	
@@ -24,19 +24,15 @@
 				</section>
 			</div>
 		</main>
-		<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-		<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-		<script>
-		  var socket = io();
-		  $('form').submit(function(){
-			 socket.emit('chat message', $('#m').val());
-			 $('#m').val('');
-			 return false;
-		  });
-		  socket.on('chat message', function(msg){
-			 $('#messages').append($('<li>').text(msg));
-		  });
-		</script>
-		<script src="scripts/main.js"></script>
+		
+		<!-- SCRIPTS -->
+		
+		<!--<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>-->
+		<!--<script src="http://code.jquery.com/jquery-1.11.1.js"></script>-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="draw/static/scripts/main.js"></script>
+		
 	</body>
 </html>

@@ -6,7 +6,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-app.use('/demo/draw', express.static('public'));
+app.use('/demo/draw/static', express.static('public'));
 
 app.get('/demo/draw', function(req, res){
 	res.sendFile(__dirname + '/views/sender.html');
@@ -14,9 +14,9 @@ app.get('/demo/draw', function(req, res){
 
 io.on('connection', function(socket){
 	console.log('a user connected');
-	socket.on('chat message', function(msg){
-		io.emit('chat message', msg);
-		console.log('message: ' + msg);
+	socket.on('draw', function(data){
+		io.emit('draw', data);
+		//console.log('draw: ' + data);
 	});
 	socket.on('disconnect', function(){
 		console.log('user disconnected');

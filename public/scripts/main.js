@@ -1,3 +1,5 @@
+// initialize variables
+var socket = io();
 var prevX = 0,
 	currX = 0,
 	prevY = 0,
@@ -19,6 +21,15 @@ var recJSON = {
 	"currY": 0
 };
 
+function setRecJSON(typ, pX, pY, cX, cY) {
+	recJSON.type = typ;
+	recJSON.prevX = pX;
+	recJSON.prevY = pY;
+	recJSON.currX = cX;
+	recJSON.currY = cY;
+}
+
+// event listeners for mouse movement
 senderCanvas.addEventListener("mousemove", function(e) {
 	findxy("move", e)
 }, false);
@@ -32,18 +43,30 @@ senderCanvas.addEventListener("mouseout", function(e) {
 	findxy("out", e)
 }, false);
 
-function draw() {
-	senderCtx.beginPath();
-	senderCtx.moveTo(prevX, prevY);
-	senderCtx.lineTo(currX, currY);
-	senderCtx.strokeStyle = "black";
-	senderCtx.lineWidth = 3;
-	senderCtx.lineJoin = "round";
-	senderCtx.lineCap = "round";
-	senderCtx.stroke();
-	senderCtx.closePath();
+// draw a segment of a line with these properties
+function drawLine(ctx, pX, pY, cX, cY) {
+	ctx.beginPath();
+	ctx.moveTo(pX, pY);
+	ctx.lineTo(cX, cY);
+	ctx.strokeStyle = "black";
+	ctx.lineWidth = 3;
+	ctx.lineJoin = "round";
+	ctx.lineCap = "round";
+	ctx.stroke();
+	ctx.closePath();
 }
 
+// draw a small dot
+function drawDot(ctx, cX, cY) {
+	ctx.beginPath();
+	ctx.fillStyle = "black";
+	ctx.fillRect(cX, cY, 2, 2);
+	ctx.closePath();
+}
+
+// get the JSON type
+// scale the JSON line
+// draw the scaled line
 function triggerJSON(drawJSON) {
 	//document.getElementById("debug").innerHTML = drawJSON.type;
 	var jType = drawJSON.type;
@@ -52,43 +75,29 @@ function triggerJSON(drawJSON) {
 	var scaledPrevX = drawJSON.prevX / wRatio;
 	var scaledPrevY = drawJSON.prevY / hRatio;
 	if (jType == "down") {
-		receiverCtx.beginPath();
-		receiverCtx.fillStyle = "black";
-		receiverCtx.fillRect(scaledCurrX, scaledCurrY, 2, 2);
-		receiverCtx.closePath();
+		drawDot(receiverCtx, scaledCurrX, scaledCurrY);
 	}
 	if (jType == "move") {
-		receiverCtx.beginPath();
-		receiverCtx.moveTo(scaledPrevX, scaledPrevY);
-		receiverCtx.lineTo(scaledCurrX, scaledCurrY);
-		receiverCtx.strokeStyle = "black";
-		receiverCtx.lineWidth = 3;
-		receiverCtx.lineJoin = "round";
-		receiverCtx.lineCap = "round";
-		receiverCtx.stroke();
-		receiverCtx.closePath();
+		drawLine(receiverCtx, scaledPrevX, scaledPrevY, scaledCurrX, scaledCurrY);
 	}
 }
 
+// detect mouse position in senderCanvas if mouse is down
+// draw line
+// write mouse position to recJSON
 function findxy(res, e) {
 	if (res == "down") {
 		prevX = currX;
 		prevY = currY;
 		currX = e.clientX - senderCanvas.offsetLeft;
 		currY = e.clientY - senderCanvas.offsetTop;
-		recJSON.type = "down";
-		recJSON.prevX = prevX;
-		recJSON.prevY = prevY;
-		recJSON.currX = currX;
-		recJSON.currY = currY;
-		triggerJSON(recJSON);
+		setRecJSON("down", prevX, prevY, currX, currY);
+		//triggerJSON(recJSON);
+		socket.emit('draw', recJSON);
 		drawFlag = true;
 		dotFlag = true;
 		if (dotFlag) {
-			senderCtx.beginPath();
-			senderCtx.fillStyle = "black";
-			senderCtx.fillRect(currX, currY, 2, 2);
-			senderCtx.closePath();
+			drawDot(senderCtx, currX, currY);
 			dotFlag = false;
 		}
 	}
@@ -101,13 +110,13 @@ function findxy(res, e) {
 			prevY = currY;
 			currX = e.clientX - senderCanvas.offsetLeft;
 			currY = e.clientY - senderCanvas.offsetTop;
-			draw();
-			recJSON.type = "move";
-			recJSON.prevX = prevX;
-			recJSON.prevY = prevY;
-			recJSON.currX = currX;
-			recJSON.currY = currY;
-			triggerJSON(recJSON);
+			drawLine(senderCtx, prevX, prevY, currX, currY);
+			setRecJSON("move", prevX, prevY, currX, currY);
+			//triggerJSON(recJSON);
+			socket.emit('draw', recJSON);
 		}
+	}
 }
-}
+socket.on('draw', function(data) {
+	triggerJSON(data);
+});
