@@ -1,0 +1,33 @@
+@import url(normalize.css);
+body {
+  background: #333; }
+
+main {
+  overflow: hidden;
+  background: #EEE; }
+  main.aspect-16-9 {
+    position: relative; }
+    main.aspect-16-9:before {
+      display: block;
+      content: "";
+      width: 100%;
+      padding-top: 56.25%; }
+    main.aspect-16-9 > .content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex; }
+  main section {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1;
+        -ms-flex: 1 1;
+            flex: 1 1; }
+    main section canvas {
+      background: #FFF;
+      border: 1px solid red;
+      box-sizing: border-box; }

@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+	<head>
+		<title>
+			I Can't Draw That
+		</title>
+		
+		<link href="styles/main.css" rel="stylesheet" type="text/css">
+		
+	</head>
+	
+	<body>
+		<main class="aspect-16-9">
+			<div class="content">
+				<section id="drawing">
+					<canvas id="sender-canvas" width="400" height="450">
+						Canvas not supported. You need to use a different browser.
+					</canvas>
+				</section>
+				<section id="display">
+					<canvas id="reciever-canvas" width="400" height="450">
+						Canvas not supported. You need to use a different browser.
+					</canvas>
+				</section>
+			</div>
+		</main>
+		<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+		<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+		<script>
+		  var socket = io();
+		  $('form').submit(function(){
+			 socket.emit('chat message', $('#m').val());
+			 $('#m').val('');
+			 return false;
+		  });
+		  socket.on('chat message', function(msg){
+			 $('#messages').append($('<li>').text(msg));
+		  });
+		</script>
+		<script src="scripts/main.js"></script>
+	</body>
+</html>

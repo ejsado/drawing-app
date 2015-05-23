@@ -1,9 +1,15 @@
-var app = require('express')();
+// must run as root on port 80
+// cannot share port with apache
+
+var express = require('express');
+var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-app.get('/chat', function(req, res){
-	res.sendFile(__dirname + '/index.html');
+app.use('/demo/draw', express.static('public'));
+
+app.get('/demo/draw', function(req, res){
+	res.sendFile(__dirname + '/views/sender.html');
 });
 
 io.on('connection', function(socket){
@@ -17,6 +23,6 @@ io.on('connection', function(socket){
 	});
 });
 
-http.listen(3000, function(){
-	console.log('listening on *:3000');
+http.listen(80, function(){
+	console.log('listening on *:80');
 });
