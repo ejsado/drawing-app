@@ -1,0 +1,185 @@
+<!doctype html>
+<html>
+	<head>
+		<title>
+			I Can't Draw That
+		</title>
+		
+		<link href="static/styles/css/reciever.css" rel="stylesheet" type="text/css">
+		
+	</head>
+	
+	<body>
+		<main class="fit-to-window">
+			<section class="base-layer" id="display-drawing">
+				<h1>
+					<span id="draw-name">
+						username1
+					</span>
+					is making you look at this
+				</h1>
+				<div id="timer-seconds">
+					60
+				</div>
+				<canvas id="reciever-canvas" width="400" height="450">
+					Canvas not supported. You need to use a different browser. Or at least upgrade from IE6.
+				</canvas>
+			</section>
+			<section class="overlay" id="display-guess">
+				<div id="guess-container">
+					<h1 id="guess-phrase">
+						random phrase
+					</h1>
+					<h3 id="guess-by">
+						guessed by
+					</h3>
+					<h2 id="guess-name">
+						username2
+					</h2>
+				</div>
+			</section>
+			<section class="overlay" id="display-info">
+				<div id="info-container">
+					<h1 id="info-1">
+						username's turn! username wins!
+					</h1>
+					<h2 id="info-2">
+						*hint: look at your phone new game?
+					</h2>
+				</div>
+			</section>
+			<section class="overlay" id="display-players">
+				<h1 id="display-players-header">
+					Scoreboard Room Code:
+					<span id="room-big">
+						UWBF
+					</span>
+				</h1>
+				<div id="score-container">
+					<p>
+						username
+						<span>
+							500
+						</span>
+					</p>
+					<p>
+						username
+						<span>
+							500
+						</span>
+					</p>
+					<p>
+						username
+						<span>
+							500
+						</span>
+					</p>
+					<p>
+						username
+						<span>
+							500
+						</span>
+					</p>
+					<p>
+						username
+						<span>
+							500
+						</span>
+					</p>
+					<p>
+						username
+						<span>
+							500
+						</span>
+					</p>
+				</div>
+			</section>
+			<section class="overlay" id="display-settings">
+				<h1>
+					Settings
+				</h1>
+				<form id="form-settings">
+					<div class="split-form">
+						<h2>
+							Categories
+							<button type="button" class="button" id="select-all">
+								Select All
+							</button>
+						</h2>
+						<div class="category">
+							<input type="checkbox" id="cat-1">
+							<label for="cat-1">
+								Animals
+							</label>
+						</div>
+						<div class="category">
+							<input type="checkbox" id="cat-2">
+							<label for="cat-2">
+								Household Objects
+							</label>
+						</div>
+						<div class="category">
+							<input type="checkbox" id="cat-3">
+							<label for="cat-3">
+								Body Parts
+							</label>
+						</div>
+						<div class="category">
+							<input type="checkbox" id="cat-4">
+							<label for="cat-4">
+								Technology
+							</label>
+						</div>
+					</div>
+					<div>
+						<div class="left-label">
+							<label for="time-limit">
+								Time Limit
+								<span>
+									(sec)
+								</span>
+							</label>
+							<input type="number" id="time-limit" value="60" min="30" max="300">
+						</div>
+						<div class="left-label">
+							<label for="hard-mode">
+								Hard Mode
+							</label>
+							<input type="checkbox" id="hard-mode">
+							<p id="hard-mode-info">
+								Only shows the drawing on the TV (lol)
+							</p>
+						</div>
+					</div>
+					<div class="buttons-form">
+						<button type="button" class="button" id="cancel">
+							Cancel
+						</button>
+						<button type="submit" class="button" id="save">
+							Save
+						</button>
+						<p>
+							Changes will be applied when I feel like it
+						</p>
+					</div>
+				</form>
+			</section>
+			<div id="display-room-code">
+				Room Code:
+				<span id="room-small">
+					UWBF
+				</span>
+			</div>
+		</main>
+		
+		<!-- SCRIPTS -->
+		
+		<!--<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>-->
+		<!--<script src="http://code.jquery.com/jquery-1.11.1.js"></script>-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="static/scripts/main.js"></script>
+		
+	</body>
+</html>

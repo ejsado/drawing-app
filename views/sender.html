@@ -5,24 +5,93 @@
 			I Can't Draw That
 		</title>
 		
-		<link href="draw/static/styles/main.css" rel="stylesheet" type="text/css">
+		<link href="draw/static/styles/css/sender.css" rel="stylesheet" type="text/css">
 		
 	</head>
 	
 	<body>
-		<main class="aspect-16-9">
-			<div class="content">
-				<section id="drawing">
-					<canvas id="sender-canvas" width="400" height="450">
-						Canvas not supported. You need to use a different browser.
-					</canvas>
-				</section>
-				<section id="display">
-					<canvas id="reciever-canvas" width="400" height="450">
-						Canvas not supported. You need to use a different browser.
-					</canvas>
-				</section>
-			</div>
+		<main class="fit-to-window">
+			<section class="base-layer" id="user-drawing">
+				<div id="phrase">
+					<span>
+						random phrase
+					</span>
+				</div>
+				<div id="timer-bar"></div>
+				<canvas id="sender-canvas" width="400" height="450">
+					Canvas not supported. You need to use a different browser. Or at least upgrade from IE6.
+				</canvas>
+				<div id="guesser-list">
+					<button type="button" class="button guesser">
+						User Name1
+					</button>
+					<button type="button" class="button guesser">
+						User Name2
+					</button>
+					<button type="button" class="button guesser">
+						User Name3
+					</button>
+				</div>
+				<button type="button" class="button" id="correct">
+					Correct
+				</button>
+			</section>
+			<section class="overlay" id="user-login">
+				<h1>
+					I Can't Draw That
+				</h1>
+				<form id="form-login">
+					<label for="room-code" class="top-label">
+						Room Code
+						<span>
+							(4 chars)
+						</span>
+					</label>
+					<input type="text" id="room-code" placeholder="get a room already">
+					<label for="username" class="top-label">
+						Your Name
+						<span>
+							(max 12 chars)
+						</span>
+					</label>
+					<input type="text" id="username" placeholder="Bond, James Bond">
+					<button type="submit" class="button" id="join">
+						Join
+					</button>
+				</form>
+			</section>
+			<section class="overlay" id="user-ready">
+				<h1>
+					Ready?
+				</h1>
+				<h2>
+					You have 60 seconds to draw as many phrases as you can. 
+				</h2>
+				<h3 id="timer-info">
+					The blue bar displays how much time is left.
+				</h3>
+				<button type="submit" class="button" id="join">
+					Let's Go!
+				</button>
+			</section>
+			<section class="overlay" id="user-wait">
+				<h1>
+					It's not your turn.
+				</h1>
+			</section>
+			<section class="overlay" id="user-new-game">
+				<h1>
+					New Game?
+				</h1>
+				<form id="form-new-game">
+					<button type="button" class="button" id="new-players">
+						New Players
+					</button>
+					<button type="button" class="button" id="same-players">
+						Same Players
+					</button>
+				</form>
+			</section>
 		</main>
 		
 		<!-- SCRIPTS -->

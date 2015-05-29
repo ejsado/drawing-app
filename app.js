@@ -1,4 +1,4 @@
-// must run as root on port 80
+// must run as root when on port 80
 // cannot share port with apache
 
 var express = require('express');
@@ -10,6 +10,10 @@ app.use('/demo/draw/static', express.static('public'));
 
 app.get('/demo/draw', function(req, res){
 	res.sendFile(__dirname + '/views/sender.html');
+});
+
+app.get('/demo/draw/tv', function(req, res){
+	res.sendFile(__dirname + '/views/reciever.html');
 });
 
 io.on('connection', function(socket){

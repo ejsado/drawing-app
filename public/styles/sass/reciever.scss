@@ -1,0 +1,191 @@
+@import "main";
+
+#display-drawing {
+	//background: #EEE;
+	color: rgba(0,0,0,0.4);
+	h1 {
+		position: absolute;
+		margin: 1% 2%;
+		font-size: 2.5vw;
+	}
+	#timer-seconds {
+		position: absolute;
+		right: 0;
+		width: 20%;
+		margin: 0 2%;
+		text-align: right;
+		font-size: 6vw;
+	}
+	#reciever-canvas {
+		margin: 0 auto;
+		height: 100%;
+	}
+}
+#display-guess {
+	display: block;
+	background: transparent;
+	color: rgba(0,0,0,0.6);
+	text-align: center;
+	div {
+		position: absolute;
+		width: 100%;
+		bottom: 20%;
+	}
+	h1 {
+		font-size: 5vw;
+		margin-bottom: 1.5em;
+	}
+	h2 {
+		font-size: 3vw;
+		margin-top: 0;
+	}
+	h3 {
+		font-size: 2vw;
+		margin-bottom: 0.5em;
+	}
+}
+#display-info {
+	//display: block;
+	//background: transparent;
+	color: rgba(0,0,0,0.6);
+	text-align: center;
+	div {
+		position: absolute;
+		width: 100%;
+		bottom: 35%;
+	}
+	h1 {
+		font-size: 4.5vw;
+		margin-bottom: 1.5em;
+	}
+	h2 {
+		font-size: 2vw;
+		margin-top: 0;
+	}
+}
+#display-players {
+	display: block;
+	z-index: 1;
+	h1 {
+		font-size: 4.5vw;
+		text-align: center;
+	}
+	#room-big {
+		letter-spacing: 10px;
+	}
+	#score-container {
+		display: flex;
+		flex-flow: column wrap;
+		height: 70%;
+		width: 90%;
+		//border: 1px solid red;
+		margin: 0 auto;
+		p {
+			font-size: 3vw;
+			margin: 0 auto 1em;
+			width: 40%;
+			border-bottom: dashed 0.1em red;
+			//background: yellow;
+			span {
+				float: right;
+			}
+		}
+	}
+}
+#display-settings {
+	//display: block;
+	h1 {
+		font-size: 4.5vw;
+		text-align: center;
+	}
+	form {
+		font-size: 2vw;
+		width: 80%;
+		height: 70%;
+		//border: 1px solid red;
+		margin: 0 auto;
+		h2 {
+			margin: 0 0 0.25em;
+			font-size: 3vw;
+			button {
+				font-size: 0.3em;
+				display: inline-block;
+				padding: 1%;
+				vertical-align: middle;
+			}
+		}
+		input[type="checkbox"] {
+			transform: scale(1.75);
+			width: 1em;
+			vertical-align: middle;
+		}
+		.split-form {
+			width: 66%;
+			float: left;
+		}
+		.buttons-form {
+			position: absolute;
+			bottom: 10%;
+			width: 80%;
+			button {
+				float: right;
+				padding: 1% 2%;
+				margin-left: 0.5em;
+			}
+			#save {
+				background: green;
+			}
+		}
+		.category {
+			margin-bottom: 0.1em;
+			label {
+				font-weight: normal;
+			}
+		}
+		.left-label {
+			margin-bottom: 2em;
+			label {
+				display: inline-block;
+				margin-right: 0.5em;
+			}
+			input {
+				max-width: 3em;
+				float: right;
+			}
+			input[type="number"] {
+				height: 1.5em;
+				padding-left: 0.25em;
+			}
+			input[type="checkbox"] {
+				margin-top: 0.4em;
+			}
+		}
+		#hard-mode-info {
+			font-size: 0.6em;
+			color: #888;
+			margin: 0;
+		}
+	}
+}
+#display-room-code {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	margin: 2%;
+	color: rgba(0,0,0,0.4);
+	font-size: 2vw;
+	font-weight: bold;
+	#room-small {
+		letter-spacing: 5px;
+	}
+}
+
+
+
+
+
+
+
+
+
+
