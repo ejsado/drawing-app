@@ -52,7 +52,7 @@ h3 {
 			padding: 3%;
 		}
 	}
-	#correct {
+	#next {
 		display: block;
 		width: 100%;
 		height: $button-height;
@@ -90,7 +90,7 @@ h3 {
 #user-ready {
 	display: block;
 	background: rgba(255,255,255,0.6);
-	padding: 15%;
+	padding: 10% 15%;
 	button {
 		font-size: 3vh;
 		width: 60%;
@@ -98,6 +98,7 @@ h3 {
 		padding: 4%;
 	}
 	#timer-info {
+		margin-bottom: 2em;
 		&::before {
 			content: "";
 			display: block;
@@ -105,18 +106,18 @@ h3 {
 			margin-left: -1.5em;
 			width: 0;
 			height: 0;
-			border-top: 1.2em solid transparent;
-			border-bottom: 1.2em solid transparent;
+			border-top: 1em solid transparent;
+			border-bottom: 1em solid transparent;
 			border-right:0.8em solid #CCC;
 			transform: scale(0.9999);
 		}
 	}
 }
 #user-new-game {
-	//display: block;
+	display: block;
 	button {
-		margin: 20% auto;
-		padding: 10%;
+		margin: 10% auto;
+		padding: 8%;
 		width: 80%;
 		font-size: 3vh;
 	}

@@ -178,7 +178,7 @@ label {
       padding-left: 0.25em; }
     #display-settings form .left-label input[type="checkbox"] {
       margin-top: 0.4em; }
-  #display-settings form #hard-mode-info {
+  #display-settings form .setting-info {
     font-size: 0.6em;
     color: #888;
     margin: 0; }
