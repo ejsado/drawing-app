@@ -59,24 +59,13 @@ h3 {
   font-size: 2.5vh;
   font-weight: normal; }
 
-#user-drawing #phrase {
+#user-drawing #phrase-block {
   width: 100%;
   height: 5%;
   font-size: 3vh;
   text-align: center;
   background: #999;
-  color: #FFF;
-  white-space: nowrap; }
-  #user-drawing #phrase::before {
-    content: "";
-    height: 100%;
-    vertical-align: middle;
-    display: inline-block;
-    margin-right: -10px; }
-  #user-drawing #phrase span {
-    vertical-align: middle;
-    display: inline-block;
-    white-space: normal; }
+  color: #FFF; }
 
 #user-drawing #timer-bar {
   width: 2%;
@@ -111,27 +100,26 @@ h3 {
   padding: 0;
   margin: 0;
   font-size: 4vh;
-  background: #5EDBB0; }
+  background: #64CCA8; }
 
-#user-login {
-  display: block; }
-  #user-login #form-login {
-    width: 70%;
-    margin: 10% auto;
-    font-size: 3vh; }
-    #user-login #form-login label, #user-login #form-login input, #user-login #form-login button {
-      display: block;
-      width: 100%; }
-    #user-login #form-login label {
-      margin-bottom: 2%; }
-    #user-login #form-login input {
-      border: 2px solid #DDD;
-      padding: 0.5em;
-      margin-bottom: 8%; }
-    #user-login #form-login button {
-      padding: 0.75em; }
+#user-login #form-login {
+  width: 70%;
+  margin: 10% auto;
+  font-size: 3vh; }
+  #user-login #form-login label, #user-login #form-login input, #user-login #form-login button {
+    display: block;
+    width: 100%; }
+  #user-login #form-login label {
+    margin-bottom: 2%; }
+  #user-login #form-login input {
+    border: 2px solid #DDD;
+    padding: 0.5em;
+    margin-bottom: 8%; }
+  #user-login #form-login button {
+    padding: 0.75em; }
 
 #user-ready {
+  display: block;
   background: rgba(255, 255, 255, 0.6);
   padding: 15%; }
   #user-ready button {

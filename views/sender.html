@@ -12,8 +12,8 @@
 	<body>
 		<main class="fit-to-window">
 			<section class="base-layer" id="user-drawing">
-				<div id="phrase">
-					<span>
+				<div id="phrase-block">
+					<span id="phrase">
 						random phrase
 					</span>
 				</div>
@@ -31,9 +31,12 @@
 					<button type="button" class="button guesser">
 						User Name3
 					</button>
+					<button type="button" class="button" id="back">
+						I'm bad at drawing, skip
+					</button>
 				</div>
 				<button type="button" class="button" id="correct">
-					Correct
+					Next
 				</button>
 			</section>
 			<section class="overlay" id="user-login">
@@ -65,10 +68,19 @@
 					Ready?
 				</h1>
 				<h2>
-					You have 60 seconds to draw as many phrases as you can. 
+					You have <span id="seconds-count">60</span> seconds to draw as many phrases as you can. 
 				</h2>
 				<h3 id="timer-info">
 					The blue bar displays how much time is left.
+				</h3>
+				<h3>
+					100 points for each drawing
+				</h3>
+				<h3>
+					50 points for guessing correctly
+				</h3>
+				<h3>
+					-10 points for skipping a phrase
 				</h3>
 				<button type="submit" class="button" id="join">
 					Let's Go!
@@ -76,7 +88,7 @@
 			</section>
 			<section class="overlay" id="user-wait">
 				<h1>
-					It's not your turn.
+					*hint: look at the TV and yell words
 				</h1>
 			</section>
 			<section class="overlay" id="user-new-game">
