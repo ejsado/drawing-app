@@ -38,7 +38,11 @@ var Reciever = {
 	ValidateName: function(checkName) {
 		// currently, form validation is done in the HTML
 		// only check for duplicates here
-		
+		for (i = 0; i < Reciever.playerList.length; i++) {
+			if (Reciever.playerList[i].player == checkName) {
+				return false;
+			}
+		}
 		return true;
 	},
 	
@@ -71,7 +75,7 @@ var Reciever = {
 				} else {
 					Reciever.socket.emit('sendState', {
 						state: 'playerDuplicate',
-						playerName: userName
+						playerName: data.playerName
 					});
 				}
 				break;

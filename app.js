@@ -43,10 +43,9 @@ nsp.on('connection', function(socket) {
 	});
 	
 	socket.on('senderJoinGame', function(nameAndRoom) {
-		// validate name on sender form
 		GameNode.name = nameAndRoom.name;
 		GameNode.JoinRoom(nameAndRoom.room);
-		// emit player to all users in room
+		// validate name in reciever
 		nsp.to(nameAndRoom.room).emit('emitState', {
 			state: 'tryAddPlayer',
 			playerName: GameNode.name
