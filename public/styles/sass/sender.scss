@@ -64,7 +64,7 @@ h3 {
 }
 
 #user-login {
-	//display: block;
+	display: block;
 	#form-login {
 		width: 70%;
 		margin: 10% auto;
@@ -88,7 +88,7 @@ h3 {
 }
 
 #user-ready {
-	display: block;
+	//display: block;
 	background: rgba(255,255,255,0.6);
 	padding: 10% 15%;
 	button {
@@ -113,8 +113,13 @@ h3 {
 		}
 	}
 }
+#user-info {
+	h2 {
+		text-align: center;
+	}
+}
 #user-new-game {
-	display: block;
+	//display: block;
 	button {
 		margin: 10% auto;
 		padding: 8%;

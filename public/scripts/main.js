@@ -1,5 +1,34 @@
+
+var Shared = {
+	
+	socket: io('/demo/draw'),
+	
+	playerList: [],
+	
+	AddPlayer: function(playerName) {
+		Shared.playerList.push({player: playerName, score: 0});
+		return true;
+	}
+	
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
 // initialize variables
-var socket = io();
+var socket = io('/demo/draw');
 var prevX = 0,
 	currX = 0,
 	prevY = 0,
@@ -92,6 +121,7 @@ function findxy(res, e) {
 		currX = e.clientX - senderCanvas.offsetLeft;
 		currY = e.clientY - senderCanvas.offsetTop;
 		setRecJSON("down", prevX, prevY, currX, currY);
+		
 		//triggerJSON(recJSON);
 		socket.emit('draw', recJSON);
 		drawFlag = true;
@@ -120,3 +150,7 @@ function findxy(res, e) {
 socket.on('draw', function(data) {
 	triggerJSON(data);
 });
+
+
+
+*/

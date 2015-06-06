@@ -99,13 +99,12 @@ label {
     margin-top: 0; }
 
 #display-players {
-  display: block;
-  z-index: 1; }
+  display: block; }
   #display-players h1 {
     font-size: 4.5vw;
     text-align: center; }
   #display-players #room-big {
-    letter-spacing: 10px; }
+    letter-spacing: 0.3em; }
   #display-players #score-container {
     display: -webkit-box;
     display: -webkit-flex;
@@ -192,4 +191,4 @@ label {
   font-size: 2vw;
   font-weight: bold; }
   #display-room-code #room-small {
-    letter-spacing: 5px; }
+    letter-spacing: 0.35em; }

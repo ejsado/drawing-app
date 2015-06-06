@@ -61,6 +61,7 @@
 					<button type="submit" class="button" id="join">
 						Join
 					</button>
+					<p id="join-info">This is an error or information message.</p>
 				</form>
 			</section>
 			<section class="overlay" id="user-ready">
@@ -86,10 +87,13 @@
 					Let's Go
 				</button>
 			</section>
-			<section class="overlay" id="user-wait">
-				<h1>
+			<section class="overlay" id="user-info">
+				<h1 id="info-1">
 					*hint: look at the TV
 				</h1>
+				<h2 id="info-2">
+					Second info
+				</h2>
 			</section>
 			<section class="overlay" id="user-new-game">
 				<h1>
@@ -114,6 +118,7 @@
 		
 		<script src="/socket.io/socket.io.js"></script>
 		<script src="draw/static/scripts/main.js"></script>
+		<script src="draw/static/scripts/sender.js"></script>
 		
 	</body>
 </html>

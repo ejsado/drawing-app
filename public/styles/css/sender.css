@@ -102,24 +102,25 @@ h3 {
   font-size: 4vh;
   background: #64CCA8; }
 
-#user-login #form-login {
-  width: 70%;
-  margin: 10% auto;
-  font-size: 3vh; }
-  #user-login #form-login label, #user-login #form-login input, #user-login #form-login button {
-    display: block;
-    width: 100%; }
-  #user-login #form-login label {
-    margin-bottom: 2%; }
-  #user-login #form-login input {
-    border: 2px solid #DDD;
-    padding: 0.5em;
-    margin-bottom: 8%; }
-  #user-login #form-login button {
-    padding: 0.75em; }
+#user-login {
+  display: block; }
+  #user-login #form-login {
+    width: 70%;
+    margin: 10% auto;
+    font-size: 3vh; }
+    #user-login #form-login label, #user-login #form-login input, #user-login #form-login button {
+      display: block;
+      width: 100%; }
+    #user-login #form-login label {
+      margin-bottom: 2%; }
+    #user-login #form-login input {
+      border: 2px solid #DDD;
+      padding: 0.5em;
+      margin-bottom: 8%; }
+    #user-login #form-login button {
+      padding: 0.75em; }
 
 #user-ready {
-  display: block;
   background: rgba(255, 255, 255, 0.6);
   padding: 10% 15%; }
   #user-ready button {
@@ -143,10 +144,11 @@ h3 {
           -ms-transform: scale(0.9999);
               transform: scale(0.9999); }
 
-#user-new-game {
-  display: block; }
-  #user-new-game button {
-    margin: 10% auto;
-    padding: 8%;
-    width: 80%;
-    font-size: 3vh; }
+#user-info h2 {
+  text-align: center; }
+
+#user-new-game button {
+  margin: 10% auto;
+  padding: 8%;
+  width: 80%;
+  font-size: 3vh; }
