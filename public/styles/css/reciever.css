@@ -47,6 +47,9 @@ label {
   text-transform: uppercase;
   margin: 0;
   font-weight: normal; }
+  .button:disabled {
+    color: #CCC;
+    text-decoration: line-through; }
 
 #display-drawing {
   color: rgba(0, 0, 0, 0.4); }

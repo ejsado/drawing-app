@@ -48,7 +48,7 @@ nsp.on('connection', function(socket) {
 		// validate name in reciever
 		nsp.to(nameAndRoom.room).emit('emitState', {
 			state: 'tryAddPlayer',
-			playerName: GameNode.name
+			updatedPlayer: GameNode.name
 		});
 	});
 	
@@ -60,7 +60,7 @@ nsp.on('connection', function(socket) {
 		console.log(GameNode.name + ' in ' + GameNode.room + ' disconnected');
 		nsp.to(GameNode.room).emit('emitState', {
 			state: 'playerRemoved',
-			playerToRemove: GameNode.name
+			updatedPlayer: GameNode.name
 		});
 	});
 });

@@ -54,5 +54,9 @@ label {
 	text-transform: uppercase;
 	margin: 0;
 	font-weight: normal;
+	&:disabled {
+		color: #CCC;
+		text-decoration: line-through;
+	}
 }
 

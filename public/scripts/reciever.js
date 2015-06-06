@@ -5,7 +5,9 @@ var Reciever = {
 	
 	playerList: [],
 	
-	currentTurn: '',
+	minPlayers: 3,
+	
+	currentPlayer: '',
 	
 	ClearHTML: function() {
 		// clear default html
@@ -28,10 +30,10 @@ var Reciever = {
 		$("#display-players-header").html('Room Code: <span id="room-big">' + roomCode + '</span>');
 	},
 	
-	UpdatePlayerScores: function(playerScores) {
+	UpdatePlayerScores: function() {
 		$("#score-container").html("");
-		for (i = 0; i < playerScores.length; i++) {
-			$("#score-container").append("<p>" + playerScores[i].player + "<span>" + playerScores[i].score + "</span></p>");
+		for (i = 0; i < Reciever.playerList.length; i++) {
+			$("#score-container").append("<p>" + Reciever.playerList[i].player + "<span>" + Reciever.playerList[i].score + "</span></p>");
 		}
 	},
 	
@@ -47,47 +49,90 @@ var Reciever = {
 	},
 	
 	AddPlayer: function(playerName) {
-		Reciever.playerList.push({player: playerName, score: 0});
-		return true;
+		var len = Reciever.playerList.length;
+		var nextPlayer = '';
+		if (len >= 1) {
+			nextPlayer = Reciever.playerList[0].player;
+		}
+		Reciever.playerList.push({
+			player: playerName,
+			next:  nextPlayer,
+			score: 0
+		});
+		len = Reciever.playerList.length;
+		if (len == 1) {
+			Reciever.currentPlayer = playerName;
+		}
+		if (len > 1) {
+			Reciever.playerList[len - 2].next = playerName;
+		}
 	},
 	
 	RemovePlayer: function(playerName) {
-		for (i = 0; i < Reciever.playerList.length; i++) {
+		var len = Reciever.playerList.length;
+		for (i = 0; i < len; i++) {
 			if (Reciever.playerList[i].player == playerName) {
+				if (Reciever.currentPlayer == playerName) {
+					Reciever.currentPlayer = Reciever.playerList[i].next;
+				}
+				if (i > 0) {
+					Reciever.playerList[i - 1].next = Reciever.playerList[i].next;
+				}
 				Reciever.playerList.splice(i, 1);
 			}
 		}
-		return true;
+		if (len == 0) {
+			Reciever.currentPlayer = '';
+		}
+	},
+	
+	EnoughPlayers: function() {
+		if (Reciever.playerList.length >= Reciever.minPlayers) {
+			return true;
+		}
+		return false;
+	},
+	
+	NextTurn: function() {
+		for (i = 0; i < Reciever.playerList.length; i++) {
+			if (Reciever.playerList[i].player == Reciever.currentPlayer) {
+				Reciever.currentPlayer = Reciever.playerList[i].next;
+				return;
+			}
+		}
+	},
+	
+	PlayerListChanged: function(playerAdded, data) {
+		if (playerAdded) {
+			Reciever.AddPlayer(data.updatedPlayer);
+		} else {
+			Reciever.RemovePlayer(data.updatedPlayer);
+		}
+		Reciever.UpdatePlayerScores();
+		Reciever.socket.emit('sendState', {
+			state: 'updatePlayerList',
+			playerList: Reciever.playerList,
+			add: playerAdded,
+			updatedPlayer: data.updatedPlayer,
+			enoughPlayers: Reciever.EnoughPlayers(),
+			currentPlayer: Reciever.currentPlayer
+		});
 	},
 	
 	ProcessState: function(data) {
 		switch (data.state) {
 			case 'tryAddPlayer':
-				if (Reciever.ValidateName(data.playerName)) {
-					Reciever.AddPlayer(data.playerName);
-					Reciever.UpdatePlayerScores(Reciever.playerList);
-					Reciever.socket.emit('sendState', {
-						state: 'updatePlayerList',
-						playerList: Reciever.playerList,
-						add: true,
-						playerName: data.playerName
-					});
+				if (Reciever.ValidateName(data.updatedPlayer)) {
+					Reciever.PlayerListChanged(true, data);
 				} else {
 					Reciever.socket.emit('sendState', {
 						state: 'playerDuplicate',
-						playerName: data.playerName
+						updatedPlayer: data.updatedPlayer
 					});
 				}
 				break;
 			case 'playerRemoved':
-				Reciever.RemovePlayer(data.playerName);
-				Reciever.UpdatePlayerScores(Reciever.playerList);
-				Reciever.socket.emit('sendState', {
-					state: 'updatePlayerList',
-					playerList: Reciever.playerList,
-					add: false,
-					playerName: data.playerName
-				});
+				Reciever.PlayerListChanged(false, data);
 		}
 	},
 	

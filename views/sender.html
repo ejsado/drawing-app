@@ -39,31 +39,6 @@
 					Next
 				</button>
 			</section>
-			<section class="overlay" id="user-login">
-				<h1>
-					I Can't Draw That
-				</h1>
-				<form id="form-login">
-					<label for="room-code" class="top-label">
-						Room Code
-						<span>
-							(4 chars)
-						</span>
-					</label>
-					<input type="text" id="room-code" placeholder="get a room already" maxlength="4" autofocus required>
-					<label for="username" class="top-label">
-						Your Name
-						<span>
-							(max 12 chars)
-						</span>
-					</label>
-					<input type="text" id="username" placeholder="Bond, James Bond" maxlength="12" pattern="[a-zA-Z0-9]+" required>
-					<button type="submit" class="button" id="join">
-						Join
-					</button>
-					<p id="join-info">This is an error or information message.</p>
-				</form>
-			</section>
 			<section class="overlay" id="user-ready">
 				<h1>
 					Ready?
@@ -83,17 +58,9 @@
 				<h3>
 					-10 points for skipping a phrase
 				</h3>
-				<button type="submit" class="button" id="join">
+				<button type="submit" class="button" id="start-turn" disabled>
 					Let's Go
 				</button>
-			</section>
-			<section class="overlay" id="user-info">
-				<h1 id="info-1">
-					*hint: look at the TV
-				</h1>
-				<h2 id="info-2">
-					Second info
-				</h2>
 			</section>
 			<section class="overlay" id="user-new-game">
 				<h1>
@@ -107,6 +74,46 @@
 						OK, but I'm gonna complain the whole time
 					</button>
 				</form>
+			</section>
+			<section class="overlay" id="user-info">
+				<h1 id="info-1">
+					*hint: look at the TV
+				</h1>
+				<h2 id="info-2">
+					Second info
+				</h2>
+			</section>
+			<section class="overlay" id="user-login">
+				<h1>
+					I Can't Draw That
+				</h1>
+				<form id="form-login">
+					<label for="room-code" class="top-label">
+						Room Code
+						<span>
+							(4 chars)
+						</span>
+					</label>
+					<input type="text" id="room-code" maxlength="4" autofocus required>
+					<label for="username" class="top-label">
+						Your Name
+						<span>
+							(max 12 chars)
+						</span>
+					</label>
+					<input type="text" id="username" maxlength="12" pattern="[a-zA-Z0-9]+" required>
+					<button type="submit" class="button" id="join">
+						Join
+					</button>
+					<p id="join-info">This is an error or information message.</p>
+				</form>
+			</section>
+			<section class="overlay" id="user-loading">
+				<div class="center">
+					<h1 id="loading-info">
+						Loading...
+					</h1>
+				</div>
 			</section>
 		</main>
 		

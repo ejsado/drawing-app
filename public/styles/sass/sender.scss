@@ -63,32 +63,8 @@ h3 {
 	}
 }
 
-#user-login {
-	display: block;
-	#form-login {
-		width: 70%;
-		margin: 10% auto;
-		font-size: 3vh;
-		label, input, button {
-			display: block;
-			width: 100%;
-		}
-		label {
-			margin-bottom: 2%;
-		}
-		input {
-			border: 2px solid #DDD;
-			padding: 0.5em;
-			margin-bottom: 8%;
-		}
-		button {
-			padding: 0.75em;
-		}
-	}
-}
-
 #user-ready {
-	//display: block;
+	display: block;
 	background: rgba(255,255,255,0.6);
 	padding: 10% 15%;
 	button {
@@ -113,11 +89,7 @@ h3 {
 		}
 	}
 }
-#user-info {
-	h2 {
-		text-align: center;
-	}
-}
+
 #user-new-game {
 	//display: block;
 	button {
@@ -125,6 +97,48 @@ h3 {
 		padding: 8%;
 		width: 80%;
 		font-size: 3vh;
+	}
+}
+
+#user-info {
+	h2 {
+		text-align: center;
+	}
+}
+
+#user-login {
+	display: block;
+	#form-login {
+		width: 70%;
+		margin: 10% auto;
+		font-size: 3vh;
+		label, input, button {
+			display: block;
+			width: 100%;
+		}
+		label {
+			margin-bottom: 2%;
+		}
+		input {
+			border: 2px solid #DDD;
+			padding: 0.5em;
+			margin-bottom: 8%;
+		}
+		button {
+			padding: 0.75em;
+		}
+		#room-code {
+			text-transform: uppercase;
+			letter-spacing: 0.3em;
+		}
+	}
+}
+
+#user-loading {
+	//display: block;
+	background: rgba(255,255,255,0.6);
+	.center {
+		margin: 50% auto;
 	}
 }
 
