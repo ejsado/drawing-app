@@ -50,14 +50,14 @@
 							(4 chars)
 						</span>
 					</label>
-					<input type="text" id="room-code" placeholder="get a room already">
+					<input type="text" id="room-code" placeholder="get a room already" maxlength="4" autofocus required>
 					<label for="username" class="top-label">
 						Your Name
 						<span>
 							(max 12 chars)
 						</span>
 					</label>
-					<input type="text" id="username" placeholder="Bond, James Bond">
+					<input type="text" id="username" placeholder="Bond, James Bond" maxlength="12" pattern="[a-zA-Z0-9]+" required>
 					<button type="submit" class="button" id="join">
 						Join
 					</button>
@@ -117,7 +117,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 		
 		<script src="/socket.io/socket.io.js"></script>
-		<script src="draw/static/scripts/main.js"></script>
+		<!--<script src="draw/static/scripts/main.js"></script>-->
 		<script src="draw/static/scripts/sender.js"></script>
 		
 	</body>

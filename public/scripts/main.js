@@ -5,10 +5,14 @@ var Shared = {
 	
 	playerList: [],
 	
+	currentTurn: '',
+	
 	AddPlayer: function(playerName) {
 		Shared.playerList.push({player: playerName, score: 0});
 		return true;
 	}
+	
+	
 	
 };
 

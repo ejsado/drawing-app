@@ -1,7 +1,11 @@
 
 var Reciever = {
 	
-	//socket: io('/demo/draw'),
+	socket: io('/demo/draw'),
+	
+	playerList: [],
+	
+	currentTurn: '',
 	
 	ClearHTML: function() {
 		// clear default html
@@ -31,12 +35,55 @@ var Reciever = {
 		}
 	},
 	
+	ValidateName: function(checkName) {
+		// currently, form validation is done in the HTML
+		// only check for duplicates here
+		
+		return true;
+	},
+	
+	AddPlayer: function(playerName) {
+		Reciever.playerList.push({player: playerName, score: 0});
+		return true;
+	},
+	
+	RemovePlayer: function(playerName) {
+		for (i = 0; i < Reciever.playerList.length; i++) {
+			if (Reciever.playerList[i].player == playerName) {
+				Reciever.playerList.splice(i, 1);
+			}
+		}
+		return true;
+	},
+	
 	ProcessState: function(data) {
 		switch (data.state) {
-			case 'playerAdded':
-				Shared.AddPlayer(data.playerName);
-				Reciever.UpdatePlayerScores(Shared.playerList);
+			case 'tryAddPlayer':
+				if (Reciever.ValidateName(data.playerName)) {
+					Reciever.AddPlayer(data.playerName);
+					Reciever.UpdatePlayerScores(Reciever.playerList);
+					Reciever.socket.emit('sendState', {
+						state: 'updatePlayerList',
+						playerList: Reciever.playerList,
+						add: true,
+						playerName: data.playerName
+					});
+				} else {
+					Reciever.socket.emit('sendState', {
+						state: 'playerDuplicate',
+						playerName: userName
+					});
+				}
 				break;
+			case 'playerRemoved':
+				Reciever.RemovePlayer(data.playerName);
+				Reciever.UpdatePlayerScores(Reciever.playerList);
+				Reciever.socket.emit('sendState', {
+					state: 'updatePlayerList',
+					playerList: Reciever.playerList,
+					add: false,
+					playerName: data.playerName
+				});
 		}
 	},
 	
@@ -44,7 +91,7 @@ var Reciever = {
 		Reciever.ClearHTML();
 		// create and display room code
 		var roomCode = Reciever.GenerateRoom(4);
-		Shared.socket.emit('recieverCreateRoom', roomCode);
+		Reciever.socket.emit('recieverCreateRoom', roomCode);
 		Reciever.UpdateRoomCode(roomCode);
 	}
 };
@@ -54,7 +101,7 @@ var init = function() {
 
 	Reciever.Init();
 	
-	Shared.socket.on('emitState', function(stateData) {
+	Reciever.socket.on('emitState', function(stateData) {
 		Reciever.ProcessState(stateData);
 	});
 	
