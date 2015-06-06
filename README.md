@@ -1,4 +1,4 @@
-# drawing-app
+# I Can't Draw That
 An in-browser drawing app based on Pictionary.
 
 ## Dependencies
