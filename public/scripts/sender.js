@@ -3,9 +3,9 @@ var Sender = {
 	
 	socket: io('/demo/draw'),
 	
-	name: 'user',
+	playerName: 'user',
 	
-	room: 'empty room',
+	playerRoom: 'empty room',
 	
 	ClearHTML: function() {
 		// clear default html
@@ -66,41 +66,24 @@ var Sender = {
 		
 	},
 	
-	SendLoginInfo: function(userName, roomCode) {
-		Sender.socket.emit('senderJoinGame', {
-			room: roomCode,
-			name: userName
-		});
-		console.log('login function fired');
+	playerListChanged: function(data) {
+		Sender.UpdatePlayerList(data.playerList);
+		if (!data.enoughPlayers) {
+			Sender.DisplayInfo(true, "You need more players!", "Go make friends, quick!");
+		} else if (data.currentPlayer == Sender.playerName) {
+			Sender.DisplayInfo(false);
+			Sender.DisplayReady(true);
+		} else {
+			Sender.DisplayInfo(true, "It's not your turn.", "Hint: look at the screen and say phrases.");
+		}
 	},
 	
-	ProcessState: function(data) {
-		switch (data.state) {
-			case 'updatePlayerList':
-				Sender.UpdatePlayerList(data.playerList);
-				//Sender.DisplayLoading(false);
-				if (data.add) {
-					Sender.UpdateJoinInfo(data.updatedPlayer + ' joined the game!');
-					if (data.updatedPlayer == Sender.name) {
-						 Sender.DisplayLogin(false);
-					}
-					if (!data.enoughPlayers) {
-						Sender.DisplayInfo(true, "Find some more friends!");
-					} else if (data.currentPlayer == Sender.name) {
-						Sender.DisplayInfo(false);
-						Sender.DisplayReady(true);
-					} else {
-						Sender.DisplayInfo(true, "Wait your turn.");
-					}
-				} else if (!data.add) {
-					Sender.UpdateJoinInfo(data.updatedPlayer + ' left the game :(');
-				}
-				break;
-			case 'playerDuplicate':
-				Sender.UpdateJoinInfo('The name ' + data.updatedPlayer + ' already exists.');
-				Sender.DisableJoinButton(false);
-				break;
-		}
+	SendLoginInfo: function(name, room) {
+		Sender.socket.emit('joinGame', {
+			roomCode: room,
+			playerName: name
+		});
+		console.log('login function fired');
 	},
 	
 	Init: function() {
@@ -108,11 +91,11 @@ var Sender = {
 		// set login function
 		$('#form-login').submit(function(e) {
 			e.preventDefault();
-			Sender.name = $("#username").val();
-			Sender.room = $("#room-code").val().toUpperCase();
-			console.log('user attemped to join as ' + Sender.name);
-			// username validation happens in the reciever
-			Sender.SendLoginInfo(Sender.name, Sender.room);
+			Sender.playerName = $("#username").val();
+			Sender.playerRoom = $("#room-code").val().toUpperCase();
+			console.log('user attemped to join as ' + Sender.playerName);
+			// username validation happens on the server
+			Sender.SendLoginInfo(Sender.playerName, Sender.playerRoom);
 			Sender.DisableJoinButton(true);
 		});
 	}
@@ -123,8 +106,42 @@ var init = function() {
 
 	Sender.Init();
 	
-	Sender.socket.on('emitState', function(stateData) {
-		Sender.ProcessState(stateData);
+	var playerListChanged = function(data) {
+		
+	}
+	
+	Sender.socket.on('playerAdded', function(data) {
+		if (data.playerName == Sender.playerName) {
+			 Sender.DisplayLogin(false);
+			 console.log('you joined as ' + Sender.playerName);
+		} else {
+			console.log(data.playerName + ' joined');
+		}
+		Sender.playerListChanged(data);
+	});
+	
+	Sender.socket.on('playerRemoved', function(data) {
+		console.log(data.playerName + ' left');
+		Sender.playerListChanged(data);
+	});
+	
+	Sender.socket.on('invalidName', function(data) {
+		if (data.playerName == Sender.playerName) {
+			Sender.UpdateJoinInfo('The name ' + data.playerName + ' already exists.');
+			Sender.DisableJoinButton(false);
+		}
+		console.log(data.playerName + ' is invalid');
+	});
+	
+	Sender.socket.on('emptyRoom', function(rm) {
+		Sender.UpdateJoinInfo('The room ' + rm + ' is empty. Try again.');
+		console.log('you are in an empty room');
+	});
+	
+	Sender.socket.on('closedRoom', function(rm) {
+		var hostname = $(location).attr('hostname');
+		Sender.DisplayInfo(true, "This room was closed.", "Go to " + hostname + "/demo/draw/tv on your TV to start a new game.");
+		console.log('you are in a closed room');
 	});
 	
 };

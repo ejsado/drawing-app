@@ -3,20 +3,14 @@ var Reciever = {
 	
 	socket: io('/demo/draw'),
 	
-	playerList: [],
-	
-	minPlayers: 3,
-	
-	currentPlayer: '',
-	
-	ClearHTML: function() {
+	clearHTML: function() {
 		// clear default html
 		$("#score-container").html("");
 		$("#room-small").html("");
 		$("#display-players-header").html("");
 	},
 	
-	GenerateRoom: function(num) {
+	generateRoom: function(num) {
 		var text = "";
 		var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		for (var i=0; i < num; i++) {
@@ -25,133 +19,40 @@ var Reciever = {
 		return text;
 	},
 	
-	UpdateRoomCode: function(roomCode) {
+	updateRoomCode: function(roomCode) {
 		$("#room-small").html(roomCode);
-		$("#display-players-header").html('Room Code: <span id="room-big">' + roomCode + '</span>');
+		//$("#display-players-header").html('Room Code: <span id="room-big">' + roomCode + '</span>');
+		var hostname = $(location).attr('hostname');
+		$("#display-players-header").html(hostname + '/demo/draw');
 	},
 	
-	UpdatePlayerScores: function() {
+	updatePlayerScores: function(playerList) {
 		$("#score-container").html("");
-		for (i = 0; i < Reciever.playerList.length; i++) {
-			$("#score-container").append("<p>" + Reciever.playerList[i].player + "<span>" + Reciever.playerList[i].score + "</span></p>");
+		for (i = 0; i < playerList.length; i++) {
+			$("#score-container").append("<p>" + playerList[i].player + "<span>" + playerList[i].score + "</span></p>");
 		}
 	},
 	
-	ValidateName: function(checkName) {
-		// currently, form validation is done in the HTML
-		// only check for duplicates here
-		for (i = 0; i < Reciever.playerList.length; i++) {
-			if (Reciever.playerList[i].player == checkName) {
-				return false;
-			}
-		}
-		return true;
-	},
-	
-	AddPlayer: function(playerName) {
-		var len = Reciever.playerList.length;
-		var nextPlayer = '';
-		if (len >= 1) {
-			nextPlayer = Reciever.playerList[0].player;
-		}
-		Reciever.playerList.push({
-			player: playerName,
-			next:  nextPlayer,
-			score: 0
-		});
-		len = Reciever.playerList.length;
-		if (len == 1) {
-			Reciever.currentPlayer = playerName;
-		}
-		if (len > 1) {
-			Reciever.playerList[len - 2].next = playerName;
-		}
-	},
-	
-	RemovePlayer: function(playerName) {
-		var len = Reciever.playerList.length;
-		for (i = 0; i < len; i++) {
-			if (Reciever.playerList[i].player == playerName) {
-				if (Reciever.currentPlayer == playerName) {
-					Reciever.currentPlayer = Reciever.playerList[i].next;
-				}
-				if (i > 0) {
-					Reciever.playerList[i - 1].next = Reciever.playerList[i].next;
-				}
-				Reciever.playerList.splice(i, 1);
-			}
-		}
-		if (len == 0) {
-			Reciever.currentPlayer = '';
-		}
-	},
-	
-	EnoughPlayers: function() {
-		if (Reciever.playerList.length >= Reciever.minPlayers) {
-			return true;
-		}
-		return false;
-	},
-	
-	NextTurn: function() {
-		for (i = 0; i < Reciever.playerList.length; i++) {
-			if (Reciever.playerList[i].player == Reciever.currentPlayer) {
-				Reciever.currentPlayer = Reciever.playerList[i].next;
-				return;
-			}
-		}
-	},
-	
-	PlayerListChanged: function(playerAdded, data) {
-		if (playerAdded) {
-			Reciever.AddPlayer(data.updatedPlayer);
-		} else {
-			Reciever.RemovePlayer(data.updatedPlayer);
-		}
-		Reciever.UpdatePlayerScores();
-		Reciever.socket.emit('sendState', {
-			state: 'updatePlayerList',
-			playerList: Reciever.playerList,
-			add: playerAdded,
-			updatedPlayer: data.updatedPlayer,
-			enoughPlayers: Reciever.EnoughPlayers(),
-			currentPlayer: Reciever.currentPlayer
-		});
-	},
-	
-	ProcessState: function(data) {
-		switch (data.state) {
-			case 'tryAddPlayer':
-				if (Reciever.ValidateName(data.updatedPlayer)) {
-					Reciever.PlayerListChanged(true, data);
-				} else {
-					Reciever.socket.emit('sendState', {
-						state: 'playerDuplicate',
-						updatedPlayer: data.updatedPlayer
-					});
-				}
-				break;
-			case 'playerRemoved':
-				Reciever.PlayerListChanged(false, data);
-		}
-	},
-	
-	Init: function() {
-		Reciever.ClearHTML();
+	init: function() {
+		Reciever.clearHTML();
 		// create and display room code
-		var roomCode = Reciever.GenerateRoom(4);
-		Reciever.socket.emit('recieverCreateRoom', roomCode);
-		Reciever.UpdateRoomCode(roomCode);
+		var roomCode = Reciever.generateRoom(4);
+		Reciever.socket.emit('createGame', roomCode);
+		Reciever.updateRoomCode(roomCode);
 	}
 };
 
 
 var init = function() {
 
-	Reciever.Init();
+	Reciever.init();
 	
-	Reciever.socket.on('emitState', function(stateData) {
-		Reciever.ProcessState(stateData);
+	Reciever.socket.on('playerAdded', function(data) {
+		Reciever.updatePlayerScores(data.playerList);
+	});
+	
+	Reciever.socket.on('playerRemoved', function(data) {
+		Reciever.updatePlayerScores(data.playerList);
 	});
 	
 };
